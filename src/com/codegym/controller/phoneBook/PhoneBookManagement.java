@@ -22,10 +22,7 @@ public class PhoneBookManagement implements IPhoneBookManagement {
     }
 
     private List<PersonInfo> phoneBooks = new ArrayList<>();
-    private static final String COMMA_DELIMITER = ",";
-    private static final String NEW_LINE_SEPARATOR = "\n";
-    private static final String FILE_HEADER_PHONEBOOK = "Số điện thoại,Nhóm,Họ tên, Giới tính, Địa chỉ, Email";
-    private static final String fileNamePhoneBook = "src/data/contacts.csv";
+    public static final String fileNamePhoneBook = "src/com.codegym/data/contacts.csv";
 
     @Override
     public void add(PersonInfo personInfo) {
@@ -86,17 +83,18 @@ public class PhoneBookManagement implements IPhoneBookManagement {
     }
 
 
-        public void writeToFiles(String path) throws IOException {
-            FileWriter fileWriter = new FileWriter(path);
-            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-            for (PersonInfo personInfo: phoneBooks) {
-                bufferedWriter.write(personInfo.toString() + "\n");
-            }
-            bufferedWriter.close();
-            fileWriter.close();
+    public void writeToFiles() throws IOException {
+        FileWriter fileWriter = new FileWriter("phoneBooks.csv");
+        BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+        for (PersonInfo personInfo : phoneBooks) {
+            bufferedWriter.write(personInfo.toString() + "\n");
         }
-    public void readFiles(String path) throws IOException {
-        FileReader fileReader = new FileReader(path);
+        bufferedWriter.close();
+        fileWriter.close();
+    }
+
+    public void readFiles() throws IOException {
+        FileReader fileReader = new FileReader("phoneBooks.csv");
         BufferedReader bufferedReader = new BufferedReader(fileReader);
         String line = null;
         while ((line = bufferedReader.readLine()) != null) {
@@ -107,8 +105,8 @@ public class PhoneBookManagement implements IPhoneBookManagement {
             String sex = lines[3].trim();
             String address = lines[4].trim();
             String email = lines[5].trim();
-        PersonInfo personInfo = new PersonInfo(name,group,phoneNumber,sex,email,address);
-        this.phoneBooks.add(personInfo);
+            PersonInfo personInfo = new PersonInfo(name, group, phoneNumber, sex, email, address);
+            this.phoneBooks.add(personInfo);
         }
         bufferedReader.close();
         fileReader.close();

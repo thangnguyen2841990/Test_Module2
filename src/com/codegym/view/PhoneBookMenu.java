@@ -1,5 +1,6 @@
 package com.codegym.view;
 
+import com.codegym.controller.WriteReadFileCSV;
 import com.codegym.controller.phoneBook.IPhoneBookManagement;
 import com.codegym.controller.phoneBook.PhoneBookManagement;
 import com.codegym.model.PersonInfo;
@@ -18,11 +19,7 @@ public class PhoneBookMenu {
         int choice = -1;
         IPhoneBookManagement phoneBookManagement = PhoneBookManagement.getInstance();
         PhoneBookManagement phoneBookManagement1 = PhoneBookManagement.getInstance();
-        try {
-            phoneBookManagement1.readFiles("contacts.txt");
-        } catch (IOException e) {
-
-        }
+        WriteReadFileCSV writeReadFileCSV = new WriteReadFileCSV();
         do {
             menu();
             System.out.println("Nhập lựa chọn của bạn: ");
@@ -53,24 +50,19 @@ public class PhoneBookMenu {
                 }
                 case 6: {
                     try {
-                        phoneBookManagement1.readFiles("contacts.csv");
-                    } catch (IOException e) {
-                    }
-                    break;
-                }
-                case 7: {
-                    try {
-                        phoneBookManagement1.writeToFiles("contacts.csv");
+                        phoneBookManagement.readFiles();
                     } catch (IOException e) {
 
                     }
+                }
+                case 7: {
+                    try {
+                        phoneBookManagement.writeToFiles();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 }
-            }
-            try {
-                phoneBookManagement1.writeToFiles("contacts.txt");
-            } catch (IOException e) {
-                e.printStackTrace();
             }
         } while (choice != 0);
     }
